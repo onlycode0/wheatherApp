@@ -7,6 +7,7 @@ import { MainComponent } from './components/main/main.component';
 import { ManageComponent } from './components/manage/manage.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -21,6 +22,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
+		FormsModule,
 	],
 	providers: [
 		provideHttpClient(withInterceptorsFromDi())

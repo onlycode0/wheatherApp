@@ -1,1 +1,30 @@
-<p>manage works!</p>
+<div class="manage-container">
+	<div class="toolbar">
+		<a class="back" routerLink="/">
+			<img src="/assets/icons/icon-back.svg" alt="back">
+		</a>
+		<span class="title">Manage location</span>
+		<span class="back"></span>
+	</div>
+	<div class="manage">
+		<div class="search">
+			<img src="/assets/icons/icon-search.svg" class="icon-search" alt="search">
+			<input type="text" 
+				   class="search-input" 
+				   placeholder="Search your city"
+				   (input)="onSearch($event)">
+		</div>
+		<div class="results">
+			<div class="result" *ngFor="let city of cities">
+				<div class="info">
+					<div class="name">{{ city.name }}</div>
+					<div class="temperature">{{ (city.weather.temp | number:'1.0-0')  + '°/' + (city.weather.feelsLike | number:'1.0-0') + '°' }}</div>
+				</div>
+				<div class="description">
+					<img [src]="city.weather.icon" class="icon">
+					<div class="title">{{ city.weather.description }}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

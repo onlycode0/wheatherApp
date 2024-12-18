@@ -12,6 +12,7 @@ export class WeatherService {
 	
 	private apiKey = 'b854ddabfa588f1cdf410dbea11f05af';
 	private baseUrl = 'https://api.openweathermap.org/data/2.5/';
+	private geoApiUrl = 'https://api.openweathermap.org/geo/1.0/direct';
 
 	public getWeather(city: string): Observable<any> {
 		const settings = this.settingsService.getCurrentSettings();
@@ -25,6 +26,11 @@ export class WeatherService {
 		});
 	}
 
+	public getWeatherByCoordinates(lat: number, lon: number): Observable<any> {
+		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${this.apiKey}`;
+		return this.httpClient.get(url);
+	}
+
 	public getHourlyForecast(city: string): Observable<any> {
 		const settings = this.settingsService.getCurrentSettings();
 
@@ -36,5 +42,10 @@ export class WeatherService {
 				appid: this.apiKey,
 			},
 		});
+	}
+
+	public searchCity(cityName: string, limit: number = 5): Observable<any> {
+		const url = `${this.geoApiUrl}?q=${cityName}&limit=${limit}&appid=${this.apiKey}`;
+		return this.httpClient.get(url);
 	}
 }

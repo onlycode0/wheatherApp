@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { BehaviorSubject, debounceTime, forkJoin, map, switchMap } from 'rxjs';
 import { WeatherService } from '../../services/weather.service';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
 	selector: 'app-manage',
@@ -8,9 +9,10 @@ import { WeatherService } from '../../services/weather.service';
 	styleUrl: './manage.component.scss'
 })
 export class ManageComponent {
+	private readonly settingsService = inject(SettingsService);
 	private readonly weatherService = inject(WeatherService);
 	public searchTerm$ = new BehaviorSubject<string>('');
-	public cities: any[] = [];
+	public cities: ICity[] = [];
 
 	constructor() {
 		this.setupSearch();
@@ -21,7 +23,6 @@ export class ManageComponent {
 		this.searchTerm$.next(input);
 	}
 
-	// Настройка поиска с RxJS
 	private setupSearch() {
 		this.searchTerm$.pipe(
 			debounceTime(500),
@@ -47,8 +48,7 @@ export class ManageComponent {
 							}))
 							)
 						);
-			
-						// Возвращаем массив данных городов с погодой
+
 						return forkJoin(weatherRequests);
 					})
 				);
@@ -59,4 +59,23 @@ export class ManageComponent {
 			this.cities = citiesWithWeather;
 		});
 	}
+
+	public trackCity(name: string) {
+		const currentCities = this.settingsService.getCurrentSettings().trackedCities;
+		console.log('bb');
+		
+		this.settingsService.updateSetting('trackedCities', [...currentCities, name]);
+	}
+}
+
+export interface ICity {
+	name: string;
+	weather: IWeather;
+}
+
+export interface IWeather {
+	temp: number;
+	icon: string;
+	feelsLike: number;
+	description: string;
 }

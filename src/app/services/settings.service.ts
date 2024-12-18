@@ -9,6 +9,8 @@ export class SettingsService {
 	private settingsSubject: BehaviorSubject<Settings>;
 
 	constructor() {
+		console.log('aa');
+		
 		const savedSettings = localStorage.getItem("weatherSettings");
 		const initialSettings: Settings = savedSettings
 		? JSON.parse(savedSettings)
@@ -16,7 +18,12 @@ export class SettingsService {
 			temperatureUnit: "metric",
 			windUnit: "m/s",
 			pressureUnit: "hPa",
-			});
+			trackedCities: ["Saransk"]
+		});
+
+		if (!savedSettings) {
+			localStorage.setItem("weatherSettings", JSON.stringify(initialSettings));
+		}
 
 		this.settingsSubject = new BehaviorSubject<Settings>(initialSettings);
 	}
@@ -40,7 +47,7 @@ export class SettingsService {
 	 * @param key - ключ настройки
 	 * @param value - новое значение настройки
 	 */
-	public updateSetting(key: keyof ISettings, value: string): void {
+	public updateSetting(key: keyof ISettings, value: string | string[]): void {
 		const currentSettings = this.settingsSubject.getValue();
 		const updatedSettings = {
 			...currentSettings,

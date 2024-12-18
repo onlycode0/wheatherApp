@@ -2,17 +2,20 @@ export interface ISettings {
 	temperatureUnit: temperatureType;
 	windUnit: windType;
 	pressureUnit: pressureType;
+	trackedCities: string[];
 }
 
 export class Settings implements ISettings {
 	temperatureUnit: temperatureType;
 	windUnit: windType;
 	pressureUnit: pressureType;
+	trackedCities: string[];
 
 	constructor(settings: ISettings) {
 		this.temperatureUnit = settings.temperatureUnit;
 		this.windUnit = settings.windUnit;
 		this.pressureUnit = settings.pressureUnit;
+		this.trackedCities = settings.trackedCities;
 	}
 }
 

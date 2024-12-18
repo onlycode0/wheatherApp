@@ -15,7 +15,7 @@
 				   (input)="onSearch($event)">
 		</div>
 		<div class="results">
-			<div class="result" *ngFor="let city of cities">
+			<div class="result" *ngFor="let city of cities" (click)="trackCity(city.name)">
 				<div class="info">
 					<div class="name">{{ city.name }}</div>
 					<div class="temperature">{{ (city.weather.temp | number:'1.0-0')  + '°/' + (city.weather.feelsLike | number:'1.0-0') + '°' }}</div>

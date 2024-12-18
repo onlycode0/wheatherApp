@@ -5,16 +5,16 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ManageComponent } from './components/manage/manage.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/main', pathMatch: 'full' },
-    { path: 'main', component: MainComponent },
-    { path: 'settings', component: SettingsComponent },
-    { path: 'manage', component: ManageComponent },
+	{ path: '', redirectTo: '/main', pathMatch: 'full' },
+	{ path: 'main', component: MainComponent },
+	{ path: 'settings', component: SettingsComponent },
+	{ path: 'manage', component: ManageComponent },
 ];
 
 @NgModule({
-    imports: [
-        RouterModule.forRoot(routes)
-    ],
-    exports: [RouterModule],
+	imports: [
+		RouterModule.forRoot(routes)
+	],
+	exports: [RouterModule],
 })
 export class AppRoutingModule { }

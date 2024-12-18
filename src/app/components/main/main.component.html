@@ -1,97 +1,97 @@
-<div class="main">
-    <div class="weather">
-        <div class="header">
-            <span class="icon" routerLink="/manage">
-                <svg
-                    width="23"
-                    height="22"
-                    viewBox="0 0 23 22"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M12 11H1.33333M12 21.6667V11V21.6667ZM12 11V0.333374V11ZM12 11H22.6667H12Z"
-                        stroke="white"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                    />
-                </svg>
-            </span>
-    
-            <h4>{{ city }}</h4>
-    
-            <span class="icon" routerLink="/settings">
-                <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M16 10C17.1046 10 18 9.10457 18 8C18 6.89543 17.1046 6 16 6C14.8954 6 14 6.89543 14 8C14 9.10457 14.8954 10 16 10Z"
-                        fill="white"
-                    />
-                    <path
-                        d="M16 18C17.1046 18 18 17.1046 18 16C18 14.8954 17.1046 14 16 14C14.8954 14 14 14.8954 14 16C14 17.1046 14.8954 18 16 18Z"
-                        fill="white"
-                    />
-                    <path
-                        d="M16 26C17.1046 26 18 25.1046 18 24C18 22.8954 17.1046 22 16 22C14.8954 22 14 22.8954 14 24C14 25.1046 14.8954 26 16 26Z"
-                        fill="white"
-                    />
-                </svg>
-            </span>
-        </div>
-        <div class="current-weather text-center p-3">
-            <h3>{{ date | date : "fullDate" }}</h3>
-            <div class="weather-icon">
-                <img [src]="weatherIcon" alt="Weather icon" />
-            </div>
-            <h1>{{ weatherData?.main.temp }}°</h1>
-            <p>{{ weatherData?.weather[0]?.description }}</p>
-        </div>
-
-        <div class="details d-flex justify-content-around">
-            <div>
-                <p>Wind: {{ weatherData?.wind.speed }} km/h</p>
-            </div>
-            <div>
-                <p>Humidity: {{ weatherData?.main.humidity }}%</p>
-            </div>
-            <div>
-                <p>Pressure: {{ weatherData?.main.pressure }} hPa</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="forecast">
-        <div class="hourly-forecast d-flex">
-            <div *ngFor="let forecast of hourlyForecast">
-                <p>{{ forecast.dt_txt | date : "shortTime" }}</p>
-                <img [src]="getForecastIcon(forecast.weather[0].icon)" alt="icon" />
-                <p>{{ forecast.main.temp }}°</p>
-            </div>
-        </div>
-    </div>
-    
-    <div class="footer">
-        <span>Forcats for 7 Days</span>
-        <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path
-                d="M12.1441 18.1441C11.9105 18.1445 11.684 18.0632 11.5041 17.9141L5.50411 12.9141C5.2999 12.7443 5.17147 12.5004 5.14709 12.236C5.12271 11.9716 5.20437 11.7083 5.37411 11.5041C5.54385 11.2999 5.78776 11.1714 6.05219 11.1471C6.31662 11.1227 6.5799 11.2043 6.78411 11.3741L12.1441 15.8541L17.5041 11.5341C17.6064 11.451 17.7241 11.389 17.8504 11.3515C17.9768 11.3141 18.1093 11.302 18.2403 11.316C18.3713 11.3299 18.4983 11.3696 18.6139 11.4328C18.7296 11.4959 18.8316 11.5813 18.9141 11.6841C19.0057 11.7869 19.0751 11.9075 19.1178 12.0384C19.1606 12.1693 19.1759 12.3076 19.1628 12.4446C19.1497 12.5817 19.1084 12.7146 19.0415 12.8349C18.9746 12.9553 18.8836 13.0605 18.7741 13.1441L12.7741 17.9741C12.589 18.0996 12.3672 18.1594 12.1441 18.1441Z"
-                fill="#2C79C1"
-            />
-            <path
-                d="M12.1441 13.0013C11.9105 13.0017 11.684 12.9203 11.5041 12.7713L5.50411 7.77125C5.2999 7.60151 5.17147 7.3576 5.14709 7.09318C5.12271 6.82875 5.20437 6.56547 5.37411 6.36125C5.54385 6.15704 5.78776 6.02861 6.05219 6.00423C6.31662 5.97985 6.5799 6.06151 6.78411 6.23125L12.1441 10.7113L17.5041 6.39125C17.6064 6.30819 17.7241 6.24615 17.8504 6.20872C17.9768 6.17129 18.1093 6.1592 18.2403 6.17314C18.3713 6.18708 18.4983 6.22677 18.6139 6.28995C18.7296 6.35312 18.8316 6.43853 18.9141 6.54125C19.0057 6.64407 19.0751 6.7647 19.1178 6.89557C19.1606 7.02645 19.1759 7.16475 19.1628 7.30181C19.1497 7.43887 19.1084 7.57175 19.0415 7.6921C18.9746 7.81246 18.8836 7.91771 18.7741 8.00125L12.7741 12.8313C12.589 12.9568 12.3672 13.0166 12.1441 13.0013Z"
-                fill="#2C79C1"
-            />
-        </svg>
-    </div>
+<div class="weather-container">
+	<div class="weather-card">
+		<div class="toolbar">
+			<a routerLink="/manage">
+				<img src="/assets/icons/icon-plus.svg">
+			</a>
+			<div class="title">
+				<span class="city">{{ weatherData?.name }}</span>
+				<div class="points" >
+					<span class="point" *ngFor="let city of cities"></span>
+				</div>
+			</div>
+			<a routerLink="/settings">
+				<img src="/assets/icons/icon-burger.svg">
+			</a>
+		</div>
+		<div class="current-weather">
+			<div class="main">
+				<div class="icon">
+					<img [src]="weatherData?.icon" class="icon-current-weather" alt="Weather icon"/>
+				</div>
+				<div class="data">
+					<div class="date">
+						<span class="value">{{ date | date: 'EEEE':'':'en-US' }}</span>
+						<span class="value">{{ date | date: 'MMM d':'':'en-US' }}</span>
+					</div>
+					<span class="temperature">
+						<div class="value">
+							{{ weatherData?.temp | number:'1.0-0' }}
+							<div class="point"></div>
+						</div>
+						<span class="description">{{ weatherData?.description }}</span>
+					</span>
+				</div>
+			</div>
+			<div class="details">
+				<div class="detail">
+					<div class="icon">
+						<img src="/assets/icons/icon-wind.svg" alt="wind">
+					</div>
+					<div class="value">
+						{{ (weatherData?.wind | number:'1.0-1') + ' ' + settings.windUnit }}
+						<div class="title">Wind</div>
+					</div>
+				</div>
+				<div class="detail">
+					<div class="icon">
+						<img src="/assets/icons/icon-cloud.svg" alt="cloud">
+					</div>
+					<div class="value">
+						74%
+						<div class="title">Chance of rain</div>
+					</div>
+				</div>
+				<div class="detail">
+					<div class="icon">
+						<img src="/assets/icons/icon-pressure.svg" alt="pressure">
+					</div>
+					<div class="value">
+						{{ (weatherData?.pressure | number:'1.0-1') + ' ' + settings.pressureUnit }}
+						<div class="title">Pressure</div>
+					</div>
+				</div>
+				<div class="detail">
+					<div class="icon">
+						<img src="/assets/icons/icon-humidity.svg" alt="humidity">
+					</div>
+					<div class="value">
+						83%
+						<div class="title">Humidity</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="weather-five-hours">
+		<div class="date">
+			<span class="value">{{ date | date: 'EEEE':'':'en-US' }}</span>
+			<span class="value">{{ date | date: 'MMM d':'':'en-US' }}</span>
+		</div>
+		<div class="hours">
+			<div class="card" *ngFor="let forecast of hourlyForecast">
+				<span class="time">{{ forecast.date | date : "shortTime" }}</span>
+				<img [src]="forecast.icon" class="icon-forecast" alt="icon" />
+				<span class="temperature">{{ (forecast.temp | number:'1.0-0')  + '°/' + (forecast.feelsLike | number:'1.0-0') + '°' }}</span>
+				<span class="wind">
+					<img src="/assets/icons/icon-wind.svg" alt="wind">
+					{{ forecast.wind }}  m/s
+				</span>
+			</div>
+		</div>
+	</div>
+	<a class="link-mobile">
+		<span>Forecasts for 7 Days</span>
+		<img src="/assets/icons/icon-arrow-down.svg" alt="">
+	</a>
 </div>

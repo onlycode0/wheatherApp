@@ -72,9 +72,6 @@ export class WeatherService {
 				});
 			}),
 			map((response: any) => {
-				// Обработка полученного прогноза
-				console.log(response);
-				
 				return this.processDailyForecast(response.daily);
 			})
 		);

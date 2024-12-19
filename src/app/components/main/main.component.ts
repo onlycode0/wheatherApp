@@ -72,11 +72,13 @@ export class MainComponent implements OnInit {
 	}
 
 	public getWeeklyForecast() {
-		console.log('asdasdasda', this.currentCity?.name);
-		
 		this.weatherService.getWeeklyForecast(this.currentCity?.name ?? '').subscribe(
 			(forecast) => {
-				this.weeklyForecast = forecast;
+				this.weeklyForecast = forecast.map((day: any) => ({
+                    ...day,
+                    tempMin: UnitConverter.convertTemperature(day.tempMin, this.settings.temperatureUnit),
+                    tempMax: UnitConverter.convertTemperature(day.tempMax, this.settings.temperatureUnit),
+                }));
 				console.log('Weekly Forecast:', forecast);
 			},
 			(error) => {

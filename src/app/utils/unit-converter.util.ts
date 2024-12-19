@@ -1,4 +1,4 @@
-import { pressureType, windType } from "../models/settings.model";
+import { pressureType, temperatureType, windType } from "../models/settings.model";
 
 export class UnitConverter {
 	static convertWindSpeed(value: number, unit: windType): number {
@@ -18,4 +18,11 @@ export class UnitConverter {
 			default: return value; // hPa
 		}
 	}
+
+	static convertTemperature(value: number, metric: temperatureType): number {
+        switch (metric) {
+            case 'imperial': return (value * 9/5) + 32; // °C → °F
+            default: return value;
+        }
+    }
 }

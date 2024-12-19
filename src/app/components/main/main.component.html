@@ -108,7 +108,7 @@
 		<div class="row" *ngFor="let day of weeklyForecast">
 			<div class="name">{{ day.date | date: 'EEEE':'':'en-US' }}</div>
 			<div class="weather">{{ day.weather }}</div>
-			<div class="temperatures">{{ day.tempMin  + '°/' + day.tempMax + '°' }}</div>
+			<div class="temperatures">{{ (day.tempMin | number: "1.0-0")  + '°/' + (day.tempMax | number: "1.0-0" )+ '°' }}</div>
 		</div>
 	</div>
 </div>

@@ -1,73 +1,82 @@
 <div class="weather-container">
-	<div class="weather-card">
-		<div class="toolbar">
-			<a routerLink="/manage">
-				<img src="/assets/icons/icon-plus.svg">
-			</a>
-			<div class="title">
-				<span class="city">{{ weatherData?.name }}</span>
-				<div class="points" >
-					<span class="point" *ngFor="let city of cities"></span>
-				</div>
-			</div>
-			<a routerLink="/settings">
-				<img src="/assets/icons/icon-burger.svg">
-			</a>
-		</div>
-		<div class="current-weather">
-			<div class="main">
-				<div class="icon">
-					<img [src]="weatherData?.icon" class="icon-current-weather" alt="Weather icon"/>
-				</div>
-				<div class="data">
-					<div class="date">
-						<span class="value">{{ date | date: 'EEEE':'':'en-US' }}</span>
-						<span class="value">{{ date | date: 'MMM d':'':'en-US' }}</span>
+	<div class="card-container">
+		<div class="weather-card" 
+			 *ngFor="let city of citiesWeather; let i = index"
+			 #weatherCard
+			 [class.hidden]="i !== currentCardIndex"
+			 (mousedown)="onMouseDown($event, i)" 
+      		 (touchstart)="onMouseDown($event, i)">
+			<div class="toolbar">
+				<a routerLink="/manage">
+					<img src="/assets/icons/icon-plus.svg">
+				</a>
+				<div class="title">
+					<span class="city">{{ city?.name }}</span>
+					<div class="points">
+						<span class="point" 
+						[ngClass]="city?.name === name ? 'active' : ''" 
+						*ngFor="let name of trackedCities"></span>
 					</div>
-					<span class="temperature">
-						<div class="value">
-							{{ weatherData?.temp | number:'1.0-0' }}
-							<div class="point"></div>
+				</div>
+				<a routerLink="/settings">
+					<img src="/assets/icons/icon-burger.svg">
+				</a>
+			</div>
+			<div class="current-weather">
+				<div class="main">
+					<div class="icon">
+						<img [src]="city?.icon" class="icon-current-weather" alt="Weather icon"/>
+					</div>
+					<div class="data">
+						<div class="date">
+							<span class="value">{{ date | date: 'EEEE':'':'en-US' }}</span>
+							<span class="value">{{ date | date: 'MMM d':'':'en-US' }}</span>
 						</div>
-						<span class="description">{{ weatherData?.description }}</span>
-					</span>
-				</div>
-			</div>
-			<div class="details">
-				<div class="detail">
-					<div class="icon">
-						<img src="/assets/icons/icon-wind.svg" alt="wind">
-					</div>
-					<div class="value">
-						{{ (weatherData?.wind | number:'1.0-1') + ' ' + settings.windUnit }}
-						<div class="title">Wind</div>
+						<span class="temperature">
+							<div class="value">
+								{{ city?.temp | number:'1.0-0' }}
+								<div class="point"></div>
+							</div>
+							<span class="description">{{ city?.description }}</span>
+						</span>
 					</div>
 				</div>
-				<div class="detail">
-					<div class="icon">
-						<img src="/assets/icons/icon-cloud.svg" alt="cloud">
+				<div class="details">
+					<div class="detail">
+						<div class="icon">
+							<img src="/assets/icons/icon-wind.svg" alt="wind">
+						</div>
+						<div class="value">
+							{{ (city?.wind | number:'1.0-1') + ' ' + settings.windUnit }}
+							<div class="title">Wind</div>
+						</div>
 					</div>
-					<div class="value">
-						74%
-						<div class="title">Chance of rain</div>
+					<div class="detail">
+						<div class="icon">
+							<img src="/assets/icons/icon-cloud.svg" alt="cloud">
+						</div>
+						<div class="value">
+							74%
+							<div class="title">Chance of rain</div>
+						</div>
 					</div>
-				</div>
-				<div class="detail">
-					<div class="icon">
-						<img src="/assets/icons/icon-pressure.svg" alt="pressure">
+					<div class="detail">
+						<div class="icon">
+							<img src="/assets/icons/icon-pressure.svg" alt="pressure">
+						</div>
+						<div class="value">
+							{{ (city?.pressure | number:'1.0-1') + ' ' + settings.pressureUnit }}
+							<div class="title">Pressure</div>
+						</div>
 					</div>
-					<div class="value">
-						{{ (weatherData?.pressure | number:'1.0-1') + ' ' + settings.pressureUnit }}
-						<div class="title">Pressure</div>
-					</div>
-				</div>
-				<div class="detail">
-					<div class="icon">
-						<img src="/assets/icons/icon-humidity.svg" alt="humidity">
-					</div>
-					<div class="value">
-						83%
-						<div class="title">Humidity</div>
+					<div class="detail">
+						<div class="icon">
+							<img src="/assets/icons/icon-humidity.svg" alt="humidity">
+						</div>
+						<div class="value">
+							83%
+							<div class="title">Humidity</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -79,7 +88,7 @@
 			<span class="value">{{ date | date: 'MMM d':'':'en-US' }}</span>
 		</div>
 		<div class="hours">
-			<div class="card" *ngFor="let forecast of hourlyForecast">
+			<div class="card" *ngFor="let forecast of currentCity?.forecast">
 				<span class="time">{{ forecast.date | date : "shortTime" }}</span>
 				<img [src]="forecast.icon" class="icon-forecast" alt="icon" />
 				<span class="temperature">{{ (forecast.temp | number:'1.0-0')  + '°/' + (forecast.feelsLike | number:'1.0-0') + '°' }}</span>
@@ -94,4 +103,12 @@
 		<span>Forecasts for 7 Days</span>
 		<img src="/assets/icons/icon-arrow-down.svg" alt="">
 	</a>
+	<div class="weather-week">
+		<div class="title">Forecasts for 7 Days</div>
+		<div class="row" *ngFor="let day of weeklyForecast">
+			<div class="name">{{ day.date | date: 'EEEE':'':'en-US' }}</div>
+			<div class="weather">{{ day.weather }}</div>
+			<div class="temperatures">{{ day.tempMin  + '°/' + day.tempMax + '°' }}</div>
+		</div>
+	</div>
 </div>

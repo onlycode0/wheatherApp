@@ -1,3 +1,5 @@
+import { Forecast } from "./forecast.model";
+
 export interface IWeather {
 	name: string;
 	temp: number;
@@ -5,6 +7,7 @@ export interface IWeather {
 	pressure: number;
 	description: string;
 	icon: string;
+	forecast: Forecast[];
 }
 
 export class Weather implements IWeather {
@@ -14,6 +17,7 @@ export class Weather implements IWeather {
 	pressure: number;
 	description: string;
 	icon: string;
+	forecast: Forecast[];
 
 	constructor(data: IWeather) {
 		this.name = data.name;
@@ -22,5 +26,6 @@ export class Weather implements IWeather {
 		this.pressure = data.pressure;
 		this.description = data.description;
 		this.icon = data.icon;
+		this.forecast = data.forecast;
 	}
 }

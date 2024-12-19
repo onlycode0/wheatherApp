@@ -2,15 +2,22 @@
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
+	user-select: none;
 }
 
 .weather-card {
 	background: linear-gradient(to bottom, #62B8F6, #2C79C1);
 	border-radius: 30px;
 	color: #FFFFFF;
-	margin: 16px;
-	user-select: none;
 	cursor: grabbing;
+	margin: 16px;
+	// position: absolute;
+	user-select: none;
+	// transition: transform 0.3s ease;
+}
+
+.weather-card.hidden {
+	display: none;
 }
 
 .toolbar {
@@ -223,7 +230,7 @@
 .weather-five-hours {
 	background-color: #2C79C1;
 	color: #FFFFFF;
-	padding: 9px 10px;
+	padding: 16px 16px;
 
 	.date {
 		align-items: center;
@@ -237,6 +244,7 @@
 		.value {
 			display: flex;
 			align-items: center;
+			font-weight: 500;
 			font-size: 30px;
 
 			@media (max-width: 1023px) {
@@ -332,4 +340,37 @@
 }
 
 .weather-week {
+	background-color: #2C79C1;
+	color: #FFFFFF;
+	padding: 16px 16px;
+	margin-top: 20px;
+
+	.title {
+		display: flex;
+		justify-content: flex-start;
+		font-size: 30px;
+		font-weight: 500;
+		margin-bottom: 16px;
+
+		@media (max-width: 1023px) {
+			font-size: 16px;
+		}
+	}
+
+	.row {
+		display: flex;
+		justify-content: space-between;
+
+		.name, .weather, .temperatures {
+			min-width: 300px;
+			font-size: 24px;
+			font-weight: 500;
+			margin-bottom: 16px;
+
+			@media (max-width: 1023px) {
+				font-size: 16px;
+				min-width: 100px;
+			}
+		}
+	}
 }
